@@ -49,7 +49,6 @@ package_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 
 class Demos(object):
-
     """ Collection of demos
 
         A choice is comprised of two pieces of data:
@@ -101,6 +100,17 @@ class Demos(object):
 
     def __len__(self):
         return len(self.demos)
+
+
+image_list = list()
+
+
+def load_images():
+    global image_list
+    image_list.append(os.path.join(package_dir, "python_and_check_logo.gif"))
+    image_list.append(os.path.join(package_dir, "python_and_check_logo.jpg"))
+    image_list.append(os.path.join(package_dir, "python_and_check_logo.png"))
+    image_list.append(os.path.join(package_dir, "zzzzz.gif"))
 
 
 def easygui_demo():
@@ -176,25 +186,20 @@ def demo_buttonbox():
 def demo_buttonbox_with_image():
     msg = "Do you like this picture?\nIt is "
     choices = ["Yes", "No", "No opinion"]
-
-    for image in [
-            os.path.join(package_dir, "python_and_check_logo.gif"),
-            os.path.join(package_dir, "python_and_check_logo.jpg"),
-            os.path.join(package_dir, "python_and_check_logo.png"),
-            os.path.join(package_dir, "zzzzz.gif")]:
+    if len(image_list) == 0:
+        load_images()
+    for image in image_list:
         reply = buttonbox(msg + image, image=image, choices=choices)
         print("Reply was: {!r}".format(reply))
     return reply
 
+
 def demo_buttonbox_with_choice():
     msg = "Pick an image"
     choices = ['cancel']
-    images = list()
-    images.append(os.path.join(package_dir, "python_and_check_logo.gif"))
-    images.append(os.path.join(package_dir, "python_and_check_logo.jpg"))
-    images.append(os.path.join(package_dir, "python_and_check_logo.png"))
-    images.append(os.path.join(package_dir, "zzzzz.gif"))
-    reply = buttonbox(msg, images=images, choices=['cancel'])
+    if len(image_list) == 0:
+        load_images()
+    reply = buttonbox(msg, images=image_list, choices=['cancel'])
     print("Reply was: {!r}".format(reply))
     return reply
 
@@ -212,7 +217,7 @@ def demo_multichoicebox():
                    "jjj", "kkk", "LLL", "mmm", "nnn", "ooo",
                    "ppp", "qqq", "rrr", "sss", "ttt", "uuu",
                    "vvv"]
-    preselect = None #[0, 2, 4]
+    preselect = None  # [0, 2, 4]
     msg = "Pick as many choices as you wish."
     reply = multchoicebox(msg, "Demo of multchoicebox", listChoices, preselect)
     print("Reply was: {!r}".format(reply))
@@ -232,9 +237,9 @@ def demo_ynbox():
 def demo_choicebox():
     title = "Demo of choicebox"
     longchoice = (
-        "This is an example of a very long option "
-        "which you may or may not wish to choose."
-        * 2)
+            "This is an example of a very long option "
+            "which you may or may not wish to choose."
+            * 2)
     listChoices = ["nnn", "ddd", "eee", "fff", "aaa",
                    longchoice, "aaa", "bbb", "ccc", "ggg", "hhh",
                    "iii", "jjj", "kkk", "LLL", "mmm", "nnn",
@@ -279,7 +284,9 @@ def demo_about():
 
 
 def demo_enterbox():
-    image = os.path.join(package_dir, "python_and_check_logo.gif")
+    if len(image_list) == 0:
+        load_images()
+    image = image_list[0]
     message = ("Enter the name of your best friend."
                "\n(Result will be stripped.)")
     reply = enterbox(message, "Love!", "     Suzy Smith     ")
@@ -322,11 +329,11 @@ def demo_multpasswordbox():
 
 def demo_textbox():
     text_snippet = ((
-        "It was the best of times, and it was the worst of times.  The rich "
-        "ate cake, and the poor had cake recommended to them, but wished "
-        "only for enough cash to buy bread.  The time was ripe for "
-        "revolution! "
-        * 5) + "\n\n") * 10
+                            "It was the best of times, and it was the worst of times.  The rich "
+                            "ate cake, and the poor had cake recommended to them, but wished "
+                            "only for enough cash to buy bread.  The time was ripe for "
+                            "revolution! "
+                            * 5) + "\n\n") * 10
     title = "Demo of textbox"
     msg = "Here is some sample text. " * 16
     reply = textbox(msg, title, text_snippet)
@@ -358,7 +365,9 @@ def demo_boolbox():
 
 
 def demo_enterbox_image():
-    image = os.path.join(package_dir, "python_and_check_logo.gif")
+    if len(image_list) == 0:
+        load_images()
+    image = image_list[0]
     message = "What kind of snake is this?"
     reply = enterbox(message, "Quiz", image=image)
     print("Reply was: {!r}".format(reply))
