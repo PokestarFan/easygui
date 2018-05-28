@@ -106,6 +106,9 @@ image_list = list()
 
 
 def load_images():
+    """
+    Create the static image list
+    """
     global image_list
     image_list.append(os.path.join(package_dir, "python_and_check_logo.gif"))
     image_list.append(os.path.join(package_dir, "python_and_check_logo.jpg"))
